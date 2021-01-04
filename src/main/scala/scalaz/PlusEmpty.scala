@@ -10,3 +10,6 @@ abstract class PlusEmpty[F[_]](using ev: Plus[F]):
 
 object PlusEmpty:
   inline def apply[F[_]](using F: PlusEmpty[F]): PlusEmpty[F] = F
+
+  given PlusEmptyList: PlusEmpty[List] with
+    def empty[A]: List[A] = Nil

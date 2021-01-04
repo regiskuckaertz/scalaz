@@ -6,3 +6,5 @@ abstract class ApplicativePlus[F[_]](using ev1: Applicative[F], ev2: PlusEmpty[F
 
 object ApplicativePlus:
   inline def apply[F[_]](using F: ApplicativePlus[F]): ApplicativePlus[F] = F
+
+  given ListApplicativePlus: ApplicativePlus[List] with {}

@@ -7,6 +7,8 @@ abstract class Bind[F[_]](using ev: Apply[F]):
 
   def join[A]: F[F[A]] => F[A] = bind(identity)
 
+  extension [A, B] (fa: F[A]) def >>= (f: A => F[B]): F[B] = bind(f)(fa)
+
 object Bind:
   inline def apply[F[_]](using F: Bind[F]): Bind[F] = F
 

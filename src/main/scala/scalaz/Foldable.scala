@@ -7,6 +7,9 @@ abstract class Foldable[F[_]]:
 
   def foldLeft[A, B](z: B)(f: (B, A) => B): F[A] => B
 
+  def foldRightM[G[_]: Monad, A, B](z: => B)(f: (A, => B) => G[B]): F[A] => G[B] =
+    fa => foldLeft[A, B => G[B]](Monad[G].point)((g, a) => b => f(a, b) >>= g)(fa)(z)
+
 object Foldable:
   inline def apply[F[_]](using F: Foldable[F]): Foldable[F] = F
 
